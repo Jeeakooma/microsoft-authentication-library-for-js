@@ -1,6 +1,3 @@
-/*! msal v0.1.7 2018-06-15 */
-
-'use strict';
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -669,9 +666,12 @@ and limitations under the License.
 ***************************************************************************** */
 /* global Reflect, Promise */
 
-var extendStatics = Object.setPrototypeOf ||
-    ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-    function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+var extendStatics = function(d, b) {
+    extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return extendStatics(d, b);
+};
 
 function __extends(d, b) {
     extendStatics(d, b);
@@ -679,12 +679,15 @@ function __extends(d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 }
 
-var __assign = Object.assign || function __assign(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+var __assign = function() {
+    __assign = Object.assign || function __assign(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+        }
+        return t;
     }
-    return t;
+    return __assign.apply(this, arguments);
 }
 
 function __rest(s, e) {
@@ -1932,7 +1935,7 @@ var UserAgentApplication = /** @class */ (function () {
             if (Utils_1.Utils.isEmpty(_this._cacheStorage.getItem(authorityKey))) {
                 _this._cacheStorage.setItem(authorityKey, _this.authority);
             }
-            var urlNavigate = authenticationRequest.createNavigateUrl(scopes) + "&prompt=select_account" + "&response_mode=fragment";
+            var urlNavigate = authenticationRequest.createNavigateUrl(scopes) + "&prompt=login" + "&response_mode=fragment";
             _this.promptUser(urlNavigate);
         });
     };
@@ -1985,7 +1988,7 @@ var UserAgentApplication = /** @class */ (function () {
                 if (Utils_1.Utils.isEmpty(_this._cacheStorage.getItem(authorityKey))) {
                     _this._cacheStorage.setItem(authorityKey, _this.authority);
                 }
-                var urlNavigate = authenticationRequest.createNavigateUrl(scopes) + "&prompt=select_account" + "&response_mode=fragment";
+                var urlNavigate = authenticationRequest.createNavigateUrl(scopes) + "&prompt=login" + "&response_mode=fragment";
                 window.renewStates.push(authenticationRequest.state);
                 window.requestType = Constants_1.Constants.login;
                 _this.registerCallback(authenticationRequest.state, scope, resolve, reject);
@@ -2481,7 +2484,7 @@ var UserAgentApplication = /** @class */ (function () {
             if (extraQueryParameters) {
                 authenticationRequest.extraQueryParameters = extraQueryParameters;
             }
-            var urlNavigate = authenticationRequest.createNavigateUrl(scopes) + "&prompt=select_account" + "&response_mode=fragment";
+            var urlNavigate = authenticationRequest.createNavigateUrl(scopes) + "&prompt=login" + "&response_mode=fragment";
             urlNavigate = _this.addHintParameters(urlNavigate, userObject);
             if (urlNavigate) {
                 _this._cacheStorage.setItem(Constants_1.Constants.stateAcquireToken, authenticationRequest.state);
@@ -2541,7 +2544,7 @@ var UserAgentApplication = /** @class */ (function () {
                 if (extraQueryParameters) {
                     authenticationRequest.extraQueryParameters = extraQueryParameters;
                 }
-                var urlNavigate = authenticationRequest.createNavigateUrl(scopes) + "&prompt=select_account" + "&response_mode=fragment";
+                var urlNavigate = authenticationRequest.createNavigateUrl(scopes) + "&prompt=login" + "&response_mode=fragment";
                 urlNavigate = _this.addHintParameters(urlNavigate, userObject);
                 window.renewStates.push(authenticationRequest.state);
                 window.requestType = Constants_1.Constants.renewToken;
